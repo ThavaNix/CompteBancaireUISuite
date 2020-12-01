@@ -2,7 +2,13 @@
 #define WIDGET_H
 
 #include <QWidget>
-
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QStackedLayout>
+#include <QVBoxLayout>
+#include <QComboBox>
+#include <QLabel>
+#include <QLineEdit>
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -20,9 +26,11 @@ public slots :
 void Virement();
 void Retirer();
 void commanderUnCheque();
+
 private:
     Ui::Widget *ui;
     double Solde = 80.00;
+   QStackedLayout* opLayout;
 
 };
 #endif // WIDGET_H
