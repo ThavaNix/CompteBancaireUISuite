@@ -15,7 +15,14 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+public slots :
+
+void Virement();
+void Retirer();
+void commanderUnCheque();
 private:
     Ui::Widget *ui;
+    double Solde = 80.00;
+
 };
 #endif // WIDGET_H
