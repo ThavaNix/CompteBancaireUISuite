@@ -7,67 +7,80 @@ Widget::Widget(QWidget *parent)
 {
  //   this->setMinimumHeight(365);
  //   this->setMinimumWidth(335);
-    QVBoxLayout *mainLayoutW = new QVBoxLayout;
-
-    opLayout = new QStackedLayout;
-
-    QWidget *Ui = new QWidget;
-
+///////////////////////// Page Principale //////////////////////////////////
     ui->setupUi(Ui);
+    ui->soldeCompte->setText("Solde : " + QString::number(Solde));
     Ui->setMinimumWidth(336);
     Ui->setMinimumHeight(366);
 
-  //   connect(pageComboBox, SIGNAL(activated(int)),opLayout, SLOT(setCurrentIndex(int)));
+///////////////////////////////////////////////////////////////////////////////
 
+
+    //   connect(pageComboBox, SIGNAL(activated(int)),opLayout, SLOT(setCurrentIndex(int)));
+    for (int x =0; x<3 ;x++ ) {
+        retourAuPrincipal[x] = new QPushButton("<- Retour");
+        connect(retourAuPrincipal[x], SIGNAL(clicked()) , this , SLOT(slotWidgetRetour()));
+
+    }
 
     ///////////////////////////////// Virement ////////////////////////////////////////////////
-    QWidget *Virement = new QWidget;
-    QLabel *test[3];
+
     test[0] = new QLabel("A Debiter");
     test[1] = new QLabel("A Verser");
     test[2] = new QLabel("Saisir Le mont");
-    QLineEdit* montant = new QLineEdit;
-    QGroupBox* groupSaisie = new QGroupBox("Saisir Le montant");
-    QGridLayout* saisieLayout= new QGridLayout;
-    QPushButton* effectuerLeVirement = new QPushButton("Effectuer Le Virement");
-    QPushButton* retourAuPrincipal = new QPushButton("<- Retour");
-    retourAuPrincipal->setMaximumWidth(60);
-    effectuerLeVirement->setMaximumHeight(80);
+
+
+    selectCompteADebiter->addItem("Livret  a : " + QString::number(soldeComptes[0]));
+    selectCompteADebiter->addItem("Livret Jeune : " + QString::number(soldeComptes[1]));
+    selectCompteADebiter->addItem("Livret X : " + QString::number(soldeComptes[2]));
+
+
+    saisieSelect->addWidget(retourAuPrincipal[0] , 0 , 0);
+    saisieSelect->addWidget(test[0], 1 , 0);
+    saisieSelect->addWidget(selectCompteADebiter , 1 , 1);
+    //saisieSelect->addWidget(test[1], 2 , 0);
+    //saisieSelect->addWidget(selectCompteAVerser , 2 ,1);
+    selectGroup->setLayout(saisieSelect);
+
+    effectuerLeVirement->setMaximumHeight(70);
     saisieLayout->addWidget(montant , 0 ,  0 , 4 , 4 );
     saisieLayout->addWidget(effectuerLeVirement , 2 ,  0, 4 , 4 );
     groupSaisie->setLayout(saisieLayout);
-    QGridLayout *Vlayout = new QGridLayout;
-    static float soldeComptes[3] = {500 ,200, 700};
-    QComboBox* selectCompteADebiter = new QComboBox;
-    selectCompteADebiter->addItem("Compte a : " + QString::number(soldeComptes[0]));
-    selectCompteADebiter->addItem("Compte b : " + QString::number(soldeComptes[1]));
-    selectCompteADebiter->addItem("Compte c : " + QString::number(soldeComptes[2]));
-    QComboBox* selectCompteAVerser = new QComboBox;
-    selectCompteAVerser->addItem("Compte a : " + QString::number(soldeComptes[0]));
-    selectCompteAVerser->addItem("Compte b : " + QString::number(soldeComptes[1]));
-    selectCompteAVerser->addItem("Compte c : " + QString::number(soldeComptes[2]));
-    Vlayout->addWidget(retourAuPrincipal , 0 , 0 , 1 , 1);
-    Vlayout->addWidget(test[0], 1 , 0);
-    Vlayout->addWidget(selectCompteADebiter , 1 , 1);
-    Vlayout->addWidget(test[1], 2 , 0);
-    Vlayout->addWidget(selectCompteAVerser , 2 ,1);
-    Vlayout->addWidget(groupSaisie, 3 ,0 , 2 , 2);
+
+    Vlayout->addWidget(selectGroup , 0 , 0 , 2 , 4);
+    Vlayout->addWidget(groupSaisie, 3 ,0 , 2 , 4);
     Virement->setLayout(Vlayout);
+    connect(effectuerLeVirement, SIGNAL(clicked()) , this , SLOT(slotVirement()));
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////
 
+   /////////////////////////////////// Crediter ////////////////////////////////////
+
+    creLayout->addWidget(retourAuPrincipal[1] , 0 , 0 , 1 ,1);
+    creSaisieLayout->addWidget(creSomme , 0, 0  , 1 , 5);
+    creSomme->setValidator(new QIntValidator(0, 999999999, this));
+    creSaisieLayout->addWidget(boutonCrediter, 1 , 0  , 1 , 5 );
+    boutonCrediter->setMinimumHeight(70);
+    saisieCredit->setLayout(creSaisieLayout);
+    creLayout->addWidget(saisieCredit , 1 , 0  , 1 , 5);
+    Crediter->setLayout(creLayout);
+    connect(boutonCrediter, SIGNAL(clicked()) , this , SLOT(slotCrediter()));
+
+   /////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-    QWidget *Debiter = new QWidget;
 
     opLayout->addWidget(Ui);
     opLayout->addWidget(Virement);
-    opLayout->addWidget(Debiter);
+    opLayout->addWidget(Crediter);
     mainLayoutW->addLayout(opLayout , 0);
     //mainLayoutW->addWidget(Ui);
     setLayout(mainLayoutW);
-    connect(ui->operation1, SIGNAL(clicked()) , this , SLOT(Virement()));
+    connect(ui->virementBouton , SIGNAL(clicked()) , this , SLOT(slotWidgetVirement()));
+    connect(ui->crediterBouton, SIGNAL(clicked()) , this , SLOT(slotWidgetCrediter()));
+
+
 
 
 }
@@ -76,12 +89,51 @@ Widget::~Widget()
 {
     delete ui;
 }
-void Widget::Virement(){
+void Widget::slotWidgetVirement(){
    opLayout->setCurrentIndex(1);
+
+
+
+
+}
+void Widget::slotCrediter( ){
+    QString tmp = creSomme->text();
+    double x = tmp.toDouble();
+    this->Solde =  this->Solde - x ;
+    ui->soldeCompte->setText("Solde : " + QString::number(Solde));
+    creSomme->clear();
+    opLayout->setCurrentIndex(0);
+
+
+}
+void Widget::slotWidgetCrediter(){
+   opLayout->setCurrentIndex(2);
+
+}
+void Widget::slotWidgetDebiter(){
+   opLayout->setCurrentIndex(3);
 
 }
 
 void Widget::commanderUnCheque(){
+
+}
+void Widget::slotWidgetRetour(){
+    opLayout->setCurrentIndex(0);
+}
+void Widget::slotVirement(){
+
+    soldeComptes[selectCompteADebiter->currentIndex()] = soldeComptes[selectCompteADebiter->currentIndex()] - montant->text().toDouble();
+    Solde = Solde + montant->text().toDouble();
+    ui->soldeCompte->setText("Solde : " + QString::number(Solde));
+    selectCompteADebiter->clear();
+    selectCompteADebiter->addItem("Livret  a : " + QString::number(soldeComptes[0]));
+    selectCompteADebiter->addItem("Livret Jeune : " + QString::number(soldeComptes[1]));
+    selectCompteADebiter->addItem("Livret X : " + QString::number(soldeComptes[2]));
+
+    montant->clear();
+    opLayout->setCurrentIndex(0);
+
 
 }
 void Widget::Retirer(){

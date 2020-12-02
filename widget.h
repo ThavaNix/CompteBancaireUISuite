@@ -9,6 +9,9 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QPushButton>
+#include <QString>
+#include <QValidator>
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -23,14 +26,44 @@ public:
 
 public slots :
 
-void Virement();
+void slotWidgetVirement();
 void Retirer();
 void commanderUnCheque();
+void slotWidgetDebiter();
+void slotWidgetRetour();
+void slotWidgetCrediter();
+void slotCrediter();
+void slotVirement();
 
 private:
-    Ui::Widget *ui;
-    double Solde = 80.00;
-   QStackedLayout* opLayout;
+ double Solde = 800.00;
+ double soldeComptes[3] = {500 ,200, 700};
+Ui::Widget *ui;
+   QVBoxLayout *mainLayoutW = new QVBoxLayout;
+   QWidget *Ui = new QWidget;
+   QLabel *test[3];
+   QStackedLayout* opLayout =new QStackedLayout;;
+   QPushButton* retourAuPrincipal[3] ;
+
+   QWidget *Virement = new QWidget;
+   QLineEdit* montant = new QLineEdit;
+   QGroupBox* groupSaisie = new QGroupBox("Saisir Le montant");
+   QGridLayout* saisieLayout= new QGridLayout;
+   QPushButton* effectuerLeVirement = new QPushButton("Effectuer Le Virement");
+   QGridLayout* saisieSelect = new QGridLayout;
+   QGroupBox* selectGroup = new QGroupBox;
+   QComboBox* selectCompteADebiter = new QComboBox;
+
+   QGridLayout *Vlayout = new QGridLayout;
+
+   QWidget *Crediter = new QWidget;
+   QLineEdit *creSomme = new QLineEdit;
+   QGridLayout *creLayout = new QGridLayout;
+   QPushButton *boutonCrediter = new QPushButton("Crediter");
+   QGroupBox *saisieCredit= new QGroupBox("Entrez La Somme a Retirer");
+   QGridLayout *creSaisieLayout = new QGridLayout;
+
+
 
 };
 #endif // WIDGET_H

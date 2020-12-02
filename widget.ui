@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>344</width>
-    <height>374</height>
+    <width>393</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -25,7 +25,7 @@
      <x>0</x>
      <y>0</y>
      <width>331</width>
-     <height>361</height>
+     <height>351</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -39,13 +39,13 @@
      <rect>
       <x>0</x>
       <y>20</y>
-      <width>471</width>
-      <height>341</height>
+      <width>331</width>
+      <height>321</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="mainLayout">
      <item>
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="interfaceGroup">
        <property name="title">
         <string/>
        </property>
@@ -55,7 +55,7 @@
           <x>0</x>
           <y>0</y>
           <width>141</width>
-          <height>341</height>
+          <height>321</height>
          </rect>
         </property>
         <property name="title">
@@ -66,17 +66,17 @@
           <rect>
            <x>0</x>
            <y>20</y>
-           <width>141</width>
+           <width>131</width>
            <height>321</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <widget class="QPushButton" name="operation1">
+           <widget class="QPushButton" name="virementBouton">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>60</height>
+              <height>50</height>
              </size>
             </property>
             <property name="baseSize">
@@ -91,48 +91,48 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="operation2">
+           <widget class="QPushButton" name="crediterBouton">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>60</height>
+              <height>50</height>
              </size>
             </property>
             <property name="text">
-             <string>RIB</string>
+             <string>Crediter</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="debiterBouton">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>60</height>
+              <height>50</height>
              </size>
             </property>
             <property name="text">
-             <string>Info Perso</string>
+             <string>Debiter</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="cmrBouton">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>60</height>
+              <height>50</height>
              </size>
             </property>
             <property name="text">
-             <string>PushButton</string>
+             <string>Consulter Mon Rib</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </widget>
-       <widget class="QGroupBox" name="groupBox_2">
+       <widget class="QGroupBox" name="groupPerso">
         <property name="geometry">
          <rect>
           <x>140</x>
@@ -154,6 +154,20 @@
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout">
+          <item row="4" column="0">
+           <widget class="QLabel" name="prenomCompte">
+            <property name="text">
+             <string>Prenom : </string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="soldeCompte">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="nCompte">
             <property name="text">
@@ -165,20 +179,6 @@
            <widget class="QLabel" name="nomCompte">
             <property name="text">
              <string>Nom:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="soldeCompte">
-            <property name="text">
-             <string>Solde :</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="prenomCompte">
-            <property name="text">
-             <string>Prenom : </string>
             </property>
            </widget>
           </item>
