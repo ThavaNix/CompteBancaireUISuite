@@ -28,24 +28,26 @@ public:
 public slots :
 
 void slotWidgetVirement();
-void Retirer();
-void commanderUnCheque();
+
+
 void slotWidgetDebiter();
 void slotWidgetRetour();
 void slotWidgetCrediter();
 void slotCrediter();
-void slotVirement();
+void slotVirementRecevoir();
 void slotDebiter();
 void slotCmr();
 void slotCmdChequier();
+void slotVirementEnvoyer();
 private:
- double Solde = 800.00;
- QString RIB = "FR76XXXXXXXXXXXXXXXXXXXX456546";
- QString Nom = "Thavan";
- QString Prenom = "Prasanth";
- QString nCompte= "000211255654";
- double soldeComptes[3] = {500 ,200, 700};
-Ui::Widget *ui;
+   double Solde = 800.00;
+   QString RIB = "FR76XXXXXXXXXXXXXXXXXXXX456546";
+   QString Nom = "Thavan";
+   QString Prenom = "Prasanth";
+   QString nCompte= "000211255654";
+   double soldeComptes[3] = {500 ,200, 700};
+
+   Ui::Widget *ui;
    QVBoxLayout *mainLayoutW = new QVBoxLayout;
    QWidget *Ui = new QWidget;
    QLabel *test[3];
@@ -56,11 +58,11 @@ Ui::Widget *ui;
    QLineEdit* montant = new QLineEdit;
    QGroupBox* groupSaisie = new QGroupBox("Saisir Le montant");
    QGridLayout* saisieLayout= new QGridLayout;
-   QPushButton* effectuerLeVirement = new QPushButton("Effectuer Le Virement");
+   QPushButton* recevoirLeVirement = new QPushButton("Recevoir");
+   QPushButton* envoyerLeVirement = new QPushButton("Envoyer");
    QGridLayout* saisieSelect = new QGridLayout;
    QGroupBox* selectGroup = new QGroupBox;
    QComboBox* selectCompteADebiter = new QComboBox;
-
    QGridLayout *Vlayout = new QGridLayout;
 
    QWidget *Crediter = new QWidget;
