@@ -9,9 +9,13 @@ Widget::Widget(QWidget *parent)
  //   this->setMinimumWidth(335);
 ///////////////////////// Page Principale //////////////////////////////////
     ui->setupUi(Ui);
-    ui->soldeCompte->setText("Solde : " + QString::number(Solde));
+
+    ui->nomCompte->setText(" Nom : " + Nom);
+    ui->prenomCompte->setText(" Prenom : " +Prenom);
+    ui->nCompte->setText(" N°Compte : " +nCompte);
+    ui->soldeCompte->setText(" Solde : " + QString::number(Solde));
     Ui->setMinimumWidth(336);
-    Ui->setMinimumHeight(366);
+    Ui->setMinimumHeight(356);
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -57,28 +61,44 @@ Widget::Widget(QWidget *parent)
 
    /////////////////////////////////// Crediter ////////////////////////////////////
 
-    creLayout->addWidget(retourAuPrincipal[1] , 0 , 0 , 1 ,1);
-    creSaisieLayout->addWidget(creSomme , 0, 0  , 1 , 5);
-    creSomme->setValidator(new QIntValidator(0, 999999999, this));
+    credLayout->addWidget(retourAuPrincipal[1] , 0 , 0 , 1 ,1);
+    creSaisieLayout->addWidget(credSommeSaisie , 0, 0  , 1 , 5);
+    credSommeSaisie->setValidator(new QIntValidator(0, 999999999, this));
     creSaisieLayout->addWidget(boutonCrediter, 1 , 0  , 1 , 5 );
     boutonCrediter->setMinimumHeight(70);
     saisieCredit->setLayout(creSaisieLayout);
-    creLayout->addWidget(saisieCredit , 1 , 0  , 1 , 5);
-    Crediter->setLayout(creLayout);
+    credLayout->addWidget(saisieCredit , 1 , 0  , 1 , 5);
+    Crediter->setLayout(credLayout);
     connect(boutonCrediter, SIGNAL(clicked()) , this , SLOT(slotCrediter()));
 
    /////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    /////////////////////////////////// Debiter ////////////////////////////////////////////////
+    mainDebLayout->addWidget(retourAuPrincipal[2] , 0 ,0 ,1 , 1);
+    debLayout->addWidget(debSommeSaisie,0,0,1,5);
+    debLayout->addWidget(boutonDebiter , 1 , 0 ,1,5);
+    boutonDebiter->setMinimumHeight(70);
+    groupDebiter->setLayout(debLayout);
+    mainDebLayout->addWidget(groupDebiter, 2 , 0 , 1, 5);
+    Debiter->setLayout(mainDebLayout);
+    connect(boutonDebiter, SIGNAL(clicked()) , this , SLOT(slotDebiter()));
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
 
     opLayout->addWidget(Ui);
     opLayout->addWidget(Virement);
     opLayout->addWidget(Crediter);
+    opLayout->addWidget(Debiter);
     mainLayoutW->addLayout(opLayout , 0);
     //mainLayoutW->addWidget(Ui);
     setLayout(mainLayoutW);
     connect(ui->virementBouton , SIGNAL(clicked()) , this , SLOT(slotWidgetVirement()));
     connect(ui->crediterBouton, SIGNAL(clicked()) , this , SLOT(slotWidgetCrediter()));
+    connect(ui->debiterBouton, SIGNAL(clicked()) , this , SLOT(slotWidgetDebiter()));
+    connect(ui->cmrBouton , SIGNAL(clicked()) , this , SLOT(slotCmr()));
+    connect(ui->cmdChequier , SIGNAL(clicked()) , this , SLOT(slotCmdChequier()));
 
 
 
@@ -97,11 +117,12 @@ void Widget::slotWidgetVirement(){
 
 }
 void Widget::slotCrediter( ){
-    QString tmp = creSomme->text();
+    QString tmp = credSommeSaisie->text();
     double x = tmp.toDouble();
-    this->Solde =  this->Solde - x ;
+    this->Solde =  this->Solde + x ;
     ui->soldeCompte->setText("Solde : " + QString::number(Solde));
-    creSomme->clear();
+
+    credSommeSaisie->clear();
     opLayout->setCurrentIndex(0);
 
 
@@ -125,16 +146,33 @@ void Widget::slotVirement(){
 
     soldeComptes[selectCompteADebiter->currentIndex()] = soldeComptes[selectCompteADebiter->currentIndex()] - montant->text().toDouble();
     Solde = Solde + montant->text().toDouble();
-    ui->soldeCompte->setText("Solde : " + QString::number(Solde));
     selectCompteADebiter->clear();
     selectCompteADebiter->addItem("Livret  a : " + QString::number(soldeComptes[0]));
     selectCompteADebiter->addItem("Livret Jeune : " + QString::number(soldeComptes[1]));
     selectCompteADebiter->addItem("Livret X : " + QString::number(soldeComptes[2]));
+    ui->soldeCompte->setText("Solde : " + QString::number(Solde));
 
     montant->clear();
     opLayout->setCurrentIndex(0);
 
 
+}
+void Widget::slotDebiter(){
+Solde = Solde - debSommeSaisie->text().toDouble();
+ui->soldeCompte->setText("Solde : " + QString::number(Solde));
+debSommeSaisie->clear();
+opLayout->setCurrentIndex(0);
+
+}
+void Widget::slotCmr(){
+    QMessageBox msgBox;
+    msgBox.setText("Votre Rib est :" + RIB);
+    msgBox.exec();
+}
+void Widget::slotCmdChequier(){
+    QMessageBox msgBox;
+    msgBox.setText("Votre Commande est Valider");
+    msgBox.exec();
 }
 void Widget::Retirer(){
 

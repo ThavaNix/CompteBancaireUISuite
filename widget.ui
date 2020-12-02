@@ -71,12 +71,24 @@
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>9</number>
+          </property>
           <item>
            <widget class="QPushButton" name="virementBouton">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>50</height>
+              <height>45</height>
              </size>
             </property>
             <property name="baseSize">
@@ -95,7 +107,7 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>50</height>
+              <height>45</height>
              </size>
             </property>
             <property name="text">
@@ -108,7 +120,7 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>50</height>
+              <height>45</height>
              </size>
             </property>
             <property name="text">
@@ -121,11 +133,24 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>50</height>
+              <height>45</height>
              </size>
             </property>
             <property name="text">
              <string>Consulter Mon Rib</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="cmdChequier">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>45</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Cmd un Chequier</string>
             </property>
            </widget>
           </item>
@@ -157,7 +182,7 @@
           <item row="4" column="0">
            <widget class="QLabel" name="prenomCompte">
             <property name="text">
-             <string>Prenom : </string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -166,19 +191,28 @@
             <property name="text">
              <string/>
             </property>
+            <property name="margin">
+             <number>1</number>
+            </property>
            </widget>
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="nCompte">
             <property name="text">
-             <string>N°de Compte :</string>
+             <string/>
+            </property>
+            <property name="margin">
+             <number>1</number>
             </property>
            </widget>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="nomCompte">
             <property name="text">
-             <string>Nom:</string>
+             <string/>
+            </property>
+            <property name="margin">
+             <number>1</number>
             </property>
            </widget>
           </item>
@@ -193,7 +227,7 @@
                <x>0</x>
                <y>0</y>
                <width>187</width>
-               <height>241</height>
+               <height>235</height>
               </rect>
              </property>
             </widget>

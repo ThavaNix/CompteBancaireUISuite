@@ -12,6 +12,7 @@
 #include <QPushButton>
 #include <QString>
 #include <QValidator>
+#include <QMessageBox>
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -34,9 +35,15 @@ void slotWidgetRetour();
 void slotWidgetCrediter();
 void slotCrediter();
 void slotVirement();
-
+void slotDebiter();
+void slotCmr();
+void slotCmdChequier();
 private:
  double Solde = 800.00;
+ QString RIB = "FR76XXXXXXXXXXXXXXXXXXXX456546";
+ QString Nom = "Thavan";
+ QString Prenom = "Prasanth";
+ QString nCompte= "000211255654";
  double soldeComptes[3] = {500 ,200, 700};
 Ui::Widget *ui;
    QVBoxLayout *mainLayoutW = new QVBoxLayout;
@@ -57,11 +64,18 @@ Ui::Widget *ui;
    QGridLayout *Vlayout = new QGridLayout;
 
    QWidget *Crediter = new QWidget;
-   QLineEdit *creSomme = new QLineEdit;
-   QGridLayout *creLayout = new QGridLayout;
+   QLineEdit *credSommeSaisie = new QLineEdit;
+   QGridLayout *credLayout = new QGridLayout;
    QPushButton *boutonCrediter = new QPushButton("Crediter");
-   QGroupBox *saisieCredit= new QGroupBox("Entrez La Somme a Retirer");
+   QGroupBox *saisieCredit= new QGroupBox("Entrez La Somme a ajouter");
    QGridLayout *creSaisieLayout = new QGridLayout;
+
+   QWidget *Debiter = new QWidget;
+   QGridLayout *debLayout = new QGridLayout;
+   QGridLayout *mainDebLayout = new QGridLayout;
+   QPushButton *boutonDebiter = new QPushButton("Debiter");
+   QLineEdit *debSommeSaisie = new QLineEdit;
+   QGroupBox *groupDebiter= new QGroupBox("Entrez La Somme a Retirer");
 
 
 
