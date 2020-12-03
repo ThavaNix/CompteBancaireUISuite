@@ -14,8 +14,9 @@ Widget::Widget(QWidget *parent)
     ui->prenomCompte->setText(" Prenom : " +Prenom);
     ui->nCompte->setText(" N°Compte : " +nCompte);
     ui->soldeCompte->setText(" Solde : " + QString::number(Solde));
-    Ui->setMinimumWidth(336);
-    Ui->setMinimumHeight(356);
+
+    Ui->setMinimumWidth(345);
+    Ui->setMinimumHeight(360);
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +30,7 @@ Widget::Widget(QWidget *parent)
 
     ///////////////////////////////// Virement ////////////////////////////////////////////////
 
-    test[0] = new QLabel("A Debiter");
+    TextCDeb = new QLabel("A Debiter");
 
     selectCompteADebiter->addItem("Livret  a : " + QString::number(soldeComptes[0]));
     selectCompteADebiter->addItem("Livret Jeune : " + QString::number(soldeComptes[1]));
@@ -37,12 +38,12 @@ Widget::Widget(QWidget *parent)
 
 
     saisieSelect->addWidget(retourAuPrincipal[0] , 0 , 0);
-    saisieSelect->addWidget(test[0], 1 , 0);
+    saisieSelect->addWidget(TextCDeb, 1 , 0);
     saisieSelect->addWidget(selectCompteADebiter , 1 , 1);
     selectGroup->setLayout(saisieSelect);
 
-    recevoirLeVirement->setMaximumHeight(70);
-    envoyerLeVirement->setMaximumHeight(70);
+    recevoirLeVirement->setMaximumHeight(60);
+    envoyerLeVirement->setMaximumHeight(60);
     saisieLayout->addWidget(montant , 0 ,  0 , 4 , 4 );
     saisieLayout->addWidget(recevoirLeVirement , 2 ,  0, 4 , 2 );
     saisieLayout->addWidget(envoyerLeVirement , 2 ,  2, 4 , 2 );
@@ -54,7 +55,7 @@ Widget::Widget(QWidget *parent)
     connect(recevoirLeVirement, SIGNAL(clicked()) , this , SLOT(slotVirementRecevoir()));
     connect(envoyerLeVirement, SIGNAL(clicked()) , this , SLOT(slotVirementEnvoyer()));
 
-
+    montant->setValidator(new QIntValidator(0, 999999999, this));
     /////////////////////////////////////////////////////////////////////////////////////////////
 
    /////////////////////////////////// Crediter ////////////////////////////////////
@@ -81,6 +82,7 @@ Widget::Widget(QWidget *parent)
     mainDebLayout->addWidget(groupDebiter, 2 , 0 , 1, 5);
     Debiter->setLayout(mainDebLayout);
     connect(boutonDebiter, SIGNAL(clicked()) , this , SLOT(slotDebiter()));
+    debSommeSaisie->setValidator(new QIntValidator(0, 999999999, this));
 
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -114,8 +116,20 @@ void Widget::slotWidgetVirement(){
 void Widget::slotCrediter( ){
     Solde = Solde + credSommeSaisie->text().toDouble();
     ui->soldeCompte->setText("Solde : " + QString::number(Solde));
+
+    if (ui->historiqueLayout->rowCount() == 9){
+        ui->historiqueLayout->removeRow(0);
+
+    }
+    if (credSommeSaisie->text() != "" ){
+    ui->historiqueLayout->addWidget(new QLabel(QDate::currentDate().toString("dd.MM.yyyy") + " Depot: " + credSommeSaisie->text()+"€" ));
+    }
     credSommeSaisie->clear();
+
+
+
     opLayout->setCurrentIndex(0);
+
 }
 void Widget::slotWidgetCrediter(){
    opLayout->setCurrentIndex(2);
@@ -137,7 +151,13 @@ void Widget::slotVirementRecevoir(){
     selectCompteADebiter->addItem("Livret Jeune : " + QString::number(soldeComptes[1]));
     selectCompteADebiter->addItem("Livret X : " + QString::number(soldeComptes[2]));
     ui->soldeCompte->setText("Solde : " + QString::number(Solde));
+    if (ui->historiqueLayout->rowCount() == 9){
+        ui->historiqueLayout->removeRow(0);
+    }
+    if (montant->text() != ""){
+    ui->historiqueLayout->addWidget(new QLabel(QDate::currentDate().toString("dd.MM.yyyy") + " Virement Reçu: " + montant->text() +"€"));
 
+}
     montant->clear();
     opLayout->setCurrentIndex(0);
 
@@ -152,7 +172,12 @@ void Widget::slotVirementEnvoyer(){
     selectCompteADebiter->addItem("Livret Jeune : " + QString::number(soldeComptes[1]));
     selectCompteADebiter->addItem("Livret X : " + QString::number(soldeComptes[2]));
     ui->soldeCompte->setText("Solde : " + QString::number(Solde));
-
+    if (ui->historiqueLayout->rowCount() == 9){
+        ui->historiqueLayout->removeRow(0);
+    }
+    if (montant->text() != ""){
+    ui->historiqueLayout->addWidget(new QLabel(QDate::currentDate().toString("dd/MM/yyyy") + " Virement Envoyer: " + montant->text()+ "€"));
+}
     montant->clear();
     opLayout->setCurrentIndex(0);
 
@@ -161,7 +186,15 @@ void Widget::slotVirementEnvoyer(){
 void Widget::slotDebiter(){
 Solde = Solde - debSommeSaisie->text().toDouble();
 ui->soldeCompte->setText("Solde : " + QString::number(Solde));
+if (ui->historiqueLayout->rowCount() == 9){
+    ui->historiqueLayout->removeRow(0);
+}
+if (debSommeSaisie->text() != ""){
+ui->historiqueLayout->addWidget(new QLabel(QDate::currentDate().toString("dd.MM.yyyy") + " Retrait: " + debSommeSaisie->text()+"€"));
+
+}
 debSommeSaisie->clear();
+
 opLayout->setCurrentIndex(0);
 
 }
@@ -174,4 +207,5 @@ void Widget::slotCmdChequier(){
     QMessageBox msgBox;
     msgBox.setText("Votre Commande est Valider");
     msgBox.exec();
+    ui->historiqueLayout->addWidget(new QLabel(QDate::currentDate().toString("dd.MM.yyyy") + " CMD CHEQUIER: "));
 }

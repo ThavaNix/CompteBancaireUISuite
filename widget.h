@@ -13,6 +13,7 @@
 #include <QString>
 #include <QValidator>
 #include <QMessageBox>
+#include <QDate>
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
@@ -50,8 +51,9 @@ private:
    Ui::Widget *ui;
    QVBoxLayout *mainLayoutW = new QVBoxLayout;
    QWidget *Ui = new QWidget;
-   QLabel *test[3];
-   QStackedLayout* opLayout =new QStackedLayout;;
+   QLabel *TextCDeb;
+  // QLabel *historique[10];
+   QStackedLayout *opLayout = new QStackedLayout;;
    QPushButton* retourAuPrincipal[3] ;
 
    QWidget *Virement = new QWidget;
